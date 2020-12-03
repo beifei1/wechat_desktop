@@ -24,6 +24,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import org.json.JSONObject;
 
 
 public class HttpUtil
@@ -117,12 +118,22 @@ public class HttpUtil
 
     public static String post(String url, Map<String, String> headers, Map<String, String> params) throws IOException
     {
-        FormBody.Builder builder = new FormBody.Builder();
-        for (String key : params.keySet())
-        {
-            builder.add(key, params.get(key));
-        }
-        RequestBody requestBodyPost = builder.build();
+//        FormBody.Builder builder = new FormBody.Builder();
+//
+//        for (String key : params.keySet())
+//        {
+//            builder.add(key, params.get(key));
+//        }
+
+        JSONObject json = new JSONObject();
+
+        params.forEach((k,v) -> {
+            json.put(k,v);
+        });
+
+        MediaType mediaType = MediaType.parse("application/json");
+
+        RequestBody requestBodyPost = RequestBody.create(mediaType,json.toString());
 
         Request.Builder reqBuilder = new Request.Builder().url(url);
         if (headers != null && headers.size() > 0)

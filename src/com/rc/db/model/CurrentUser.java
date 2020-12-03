@@ -23,11 +23,21 @@ public class CurrentUser extends BasicModel
 
     private String avatarOrigin;
 
+    public String getTcpAddress() {
+        return tcpAddress;
+    }
+
+    public void setTcpAddress(String tcpAddress) {
+        this.tcpAddress = tcpAddress;
+    }
+
+    private String tcpAddress;
+
     public CurrentUser()
     {
     }
 
-    public CurrentUser(String userId, String username, String authToken, String password, String rawPassword, String expireDate, String realName, String bcrypt, String avatarOrigin)
+    public CurrentUser(String userId, String username, String authToken, String password, String rawPassword, String expireDate, String realName, String bcrypt, String avatarOrigin,String tcpAddress)
     {
         this.userId = userId;
         this.username = username;
@@ -38,6 +48,7 @@ public class CurrentUser extends BasicModel
         this.realName = realName;
         this.bcrypt = bcrypt;
         this.avatarOrigin = avatarOrigin;
+        this.tcpAddress = tcpAddress;
     }
 
     public String getUserId()
@@ -143,6 +154,7 @@ public class CurrentUser extends BasicModel
                 ", realName='" + realName + '\'' +
                 ", bcrypt='" + bcrypt + '\'' +
                 ", avatarOrigin='" + avatarOrigin + '\'' +
+                ", tcpAddress='" + tcpAddress + '\'' +
                 '}';
     }
 }

@@ -19,9 +19,8 @@ import java.awt.event.*;
 /**
  * Created by song on 08/06/2017.
  */
-public class LoginFrame extends JFrame
-{
-    private static final int windowWidth = 300;
+public class LoginFrame extends JFrame {
+    private static final int windowWidth = 400;
     private static final int windowHeight = 400;
 
     private JPanel controlPanel;
@@ -36,12 +35,11 @@ public class LoginFrame extends JFrame
     private static Point origin = new Point();
 
     private SqlSession sqlSession;
-    private CurrentUserService currentUserService ;
+    private CurrentUserService currentUserService;
     private String username;
 
 
-    public LoginFrame()
-    {
+    public LoginFrame() {
         initService();
         initComponents();
         initView();
@@ -49,25 +47,21 @@ public class LoginFrame extends JFrame
         setListeners();
     }
 
-    public LoginFrame(String username)
-    {
+    public LoginFrame(String username) {
         this();
         this.username = username;
-        if (username != null && !username.isEmpty())
-        {
+        if (username != null && !username.isEmpty()) {
             usernameField.setText(username);
         }
     }
 
-    private void initService()
-    {
+    private void initService() {
         sqlSession = DbUtils.getSqlSession();
         currentUserService = new CurrentUserService(sqlSession);
     }
 
 
-    private void initComponents()
-    {
+    private void initComponents() {
         Dimension windowSize = new Dimension(windowWidth, windowHeight);
         setMinimumSize(windowSize);
         setMaximumSize(windowSize);
@@ -84,7 +78,7 @@ public class LoginFrame extends JFrame
         closeLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
         titleLabel = new JLabel();
-        titleLabel.setText("登  录");
+        titleLabel.setText("Fire IM");
         titleLabel.setFont(FontUtil.getDefaultFont(16));
 
 
@@ -118,16 +112,14 @@ public class LoginFrame extends JFrame
         statusLabel.setVisible(false);
     }
 
-    private void initView()
-    {
+    private void initView() {
         JPanel contentPanel = new JPanel();
         contentPanel.setBorder(new LineBorder(Colors.LIGHT_GRAY));
         contentPanel.setLayout(new GridBagLayout());
 
         controlPanel.add(closeLabel);
 
-        if (OSUtil.getOsType() != OSUtil.Mac_OS)
-        {
+        if (OSUtil.getOsType() != OSUtil.Mac_OS) {
             setUndecorated(true);
             contentPanel.add(controlPanel, new GBC(0, 0).setFill(GBC.BOTH).setWeight(1, 1).setInsets(5, 0, 0, 0));
         }
@@ -146,7 +138,6 @@ public class LoginFrame extends JFrame
         editPanel.add(statusLabel);
 
 
-
         add(contentPanel);
         contentPanel.add(titlePanel, new GBC(0, 1).setFill(GBC.BOTH).setWeight(1, 1).setInsets(10, 10, 0, 10));
         contentPanel.add(editPanel, new GBC(0, 2).setFill(GBC.BOTH).setWeight(1, 10).setInsets(10, 10, 0, 10));
@@ -155,55 +146,44 @@ public class LoginFrame extends JFrame
     /**
      * 使窗口在屏幕中央显示
      */
-    private void centerScreen()
-    {
+    private void centerScreen() {
         Toolkit tk = Toolkit.getDefaultToolkit();
         this.setLocation((tk.getScreenSize().width - windowWidth) / 2,
                 (tk.getScreenSize().height - windowHeight) / 2);
     }
 
-    private void setListeners()
-    {
-        closeLabel.addMouseListener(new AbstractMouseListener()
-        {
+    private void setListeners() {
+        closeLabel.addMouseListener(new AbstractMouseListener() {
             @Override
-            public void mouseClicked(MouseEvent e)
-            {
+            public void mouseClicked(MouseEvent e) {
                 System.exit(1);
                 super.mouseClicked(e);
             }
 
             @Override
-            public void mouseEntered(MouseEvent e)
-            {
+            public void mouseEntered(MouseEvent e) {
                 closeLabel.setBackground(Colors.LIGHT_GRAY);
                 super.mouseEntered(e);
             }
 
             @Override
-            public void mouseExited(MouseEvent e)
-            {
+            public void mouseExited(MouseEvent e) {
                 closeLabel.setBackground(Colors.WINDOW_BACKGROUND);
                 super.mouseExited(e);
             }
         });
 
-        if (OSUtil.getOsType() != OSUtil.Mac_OS)
-        {
-            addMouseListener(new MouseAdapter()
-            {
-                public void mousePressed(MouseEvent e)
-                {
+        if (OSUtil.getOsType() != OSUtil.Mac_OS) {
+            addMouseListener(new MouseAdapter() {
+                public void mousePressed(MouseEvent e) {
                     // 当鼠标按下的时候获得窗口当前的位置
                     origin.x = e.getX();
                     origin.y = e.getY();
                 }
             });
 
-            addMouseMotionListener(new MouseMotionAdapter()
-            {
-                public void mouseDragged(MouseEvent e)
-                {
+            addMouseMotionListener(new MouseMotionAdapter() {
+                public void mouseDragged(MouseEvent e) {
                     // 当鼠标拖动时获取窗口当前位置
                     Point p = LoginFrame.this.getLocation();
                     // 设置窗口的位置
@@ -213,13 +193,10 @@ public class LoginFrame extends JFrame
             });
         }
 
-        loginButton.addMouseListener(new AbstractMouseListener()
-        {
+        loginButton.addMouseListener(new AbstractMouseListener() {
             @Override
-            public void mouseClicked(MouseEvent e)
-            {
-                if (loginButton.isEnabled())
-                {
+            public void mouseClicked(MouseEvent e) {
+                if (loginButton.isEnabled()) {
                     doLogin();
                 }
 
@@ -227,25 +204,20 @@ public class LoginFrame extends JFrame
             }
         });
 
-        KeyListener keyListener = new KeyListener()
-        {
+        KeyListener keyListener = new KeyListener() {
             @Override
-            public void keyTyped(KeyEvent e)
-            {
+            public void keyTyped(KeyEvent e) {
             }
 
             @Override
-            public void keyPressed(KeyEvent e)
-            {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER)
-                {
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     doLogin();
                 }
             }
 
             @Override
-            public void keyReleased(KeyEvent e)
-            {
+            public void keyReleased(KeyEvent e) {
 
             }
         };
@@ -253,47 +225,37 @@ public class LoginFrame extends JFrame
         passwordField.addKeyListener(keyListener);
     }
 
-    private void doLogin()
-    {
+    private void doLogin() {
 
-        this.dispose();
+//        this.dispose();
 
-        MainFrame frame = new MainFrame();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
+//        MainFrame frame = new MainFrame();
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        frame.setVisible(true);
 
 
-        // TODO: 登录逻辑
-        /*String name = usernameField.getText();
+        // 登录逻辑
+        String name = usernameField.getText();
         String pwd = new String(passwordField.getPassword());
 
-        if (name == null || name.isEmpty())
-        {
+        if (name == null || name.isEmpty()) {
             showMessage("请输入用户，注意首字母可能为大写");
-        }
-        else if (pwd == null || pwd.isEmpty())
-        {
+        } else if (pwd == null || pwd.isEmpty()) {
             showMessage("请输入密码");
-        }
-        else
-        {
+        } else {
             statusLabel.setVisible(false);
-
             loginButton.setEnabled(false);
             usernameField.setEditable(false);
             passwordField.setEditable(false);
             HttpPostTask task = new HttpPostTask();
-            task.setListener(new HttpResponseListener<JSONObject>()
-            {
+            task.setListener(new HttpResponseListener<JSONObject>() {
                 @Override
-                public void onSuccess(JSONObject ret)
-                {
+                public void onSuccess(JSONObject ret) {
                     processLoginResult(ret);
                 }
 
                 @Override
-                public void onFailed()
-                {
+                public void onFailed() {
                     showMessage("登录失败，请检查网络设置");
                     loginButton.setEnabled(true);
                     usernameField.setEditable(true);
@@ -301,19 +263,20 @@ public class LoginFrame extends JFrame
                 }
             });
 
-            task.addRequestParam("username", usernameField.getText());
+            task.addRequestParam("account", usernameField.getText());
             task.addRequestParam("password", new String(passwordField.getPassword()));
-            task.execute(Launcher.HOSTNAME + "/api/v1/login");
-        }*/
+            task.addHeader("content-type","application/json");
+            task.addHeader("connection","keep-alive");
+            task.addHeader("keep-alive", "timeout=60");
+            task.execute(Launcher.HOSTNAME + "/user/login");
+        }
     }
 
-    private void processLoginResult(JSONObject ret)
-    {
-        if (ret.get("status").equals("success"))
-        {
+    private void processLoginResult(JSONObject ret) {
+        if (ret.getInt("success") == 1) {
 
             JSONObject data = ret.getJSONObject("data");
-            String authToken = data.getString("authToken");
+            String authToken = data.getString("token");
             String userId = data.getString("userId");
 
             CurrentUser currentUser = new CurrentUser();
@@ -322,6 +285,7 @@ public class LoginFrame extends JFrame
             currentUser.setRawPassword(new String(passwordField.getPassword()));
             currentUser.setPassword(PasswordUtil.encryptPassword(currentUser.getRawPassword()));
             currentUser.setUsername(usernameField.getText());
+
             currentUserService.insertOrUpdate(currentUser);
 
             this.dispose();
@@ -329,9 +293,7 @@ public class LoginFrame extends JFrame
             MainFrame frame = new MainFrame();
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setVisible(true);
-        }
-        else
-        {
+        } else {
             showMessage("用户不存在或密码错误");
             loginButton.setEnabled(true);
             usernameField.setEditable(true);
@@ -340,10 +302,8 @@ public class LoginFrame extends JFrame
 
     }
 
-    private void showMessage(String message)
-    {
-        if (!statusLabel.isVisible())
-        {
+    private void showMessage(String message) {
+        if (!statusLabel.isVisible()) {
             statusLabel.setVisible(true);
         }
 

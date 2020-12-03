@@ -34,7 +34,7 @@ public class Launcher
     public static ImageAttachmentService imageAttachmentService;
     public static FileAttachmentService fileAttachmentService;
 
-    public static final String HOSTNAME = "http://www.baidu.com";
+    public static final String HOSTNAME = "http://127.0.0.1:9001";
 
     public static final String APP_VERSION = "1.0.0";
 
