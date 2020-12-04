@@ -278,6 +278,8 @@ public class LoginFrame extends JFrame {
             JSONObject data = ret.getJSONObject("data");
             String authToken = data.getString("token");
             String userId = data.getString("userId");
+            String avatar = data.getString("avatar");
+            String nickName = data.getString("nickName");
 
             CurrentUser currentUser = new CurrentUser();
             currentUser.setUserId(userId);
@@ -285,6 +287,8 @@ public class LoginFrame extends JFrame {
             currentUser.setRawPassword(new String(passwordField.getPassword()));
             currentUser.setPassword(PasswordUtil.encryptPassword(currentUser.getRawPassword()));
             currentUser.setUsername(usernameField.getText());
+            currentUser.setAvatarOrigin(avatar);
+            currentUser.setRealName(nickName);
 
             currentUserService.insertOrUpdate(currentUser);
 
